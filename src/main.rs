@@ -22,6 +22,12 @@ fn main() {
             "std_fmt_display" => formatted_print::std_fmt_display(),
             "std_fmt_list" => formatted_print::std_fmt_list(),
             "std_fmt_formatting" => formatted_print::std_fmt_formatting(),
+            "fah_cel_conv" => {
+                control_flow::cel_to_fah();
+                control_flow::fah_to_cel();
+            }
+            "fibonacci" => control_flow::fibonacci(),
+            "christmas_song" => control_flow::christmas_song(),
             _ => {
                 println!("Invalid mode");
                 continue;
