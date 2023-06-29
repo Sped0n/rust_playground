@@ -1,38 +1,16 @@
-use std::io;
-
-mod control_flow;
-mod formatted_print;
-mod guessing_game;
-mod hello_world;
+use rust_playground::{run, Config};
+use std::{env, process};
 
 fn main() {
-    loop {
-        let mut mode = String::new();
-        println!("Select a program to run:");
-        io::stdin()
-            .read_line(&mut mode)
-            .expect("Failed to read line");
-        match mode.trim() {
-            "hello_world" => {
-                hello_world::hello_world();
-                hello_world::hello_world_alt();
-            }
-            "guessing_game" => guessing_game::guessing_game(),
-            "std_fmt_general" => formatted_print::std_fmt_general(),
-            "std_fmt_display" => formatted_print::std_fmt_display(),
-            "std_fmt_list" => formatted_print::std_fmt_list(),
-            "std_fmt_formatting" => formatted_print::std_fmt_formatting(),
-            "fah_cel_conv" => {
-                control_flow::cel_to_fah();
-                control_flow::fah_to_cel();
-            }
-            "fibonacci" => control_flow::fibonacci(),
-            "christmas_song" => control_flow::christmas_song(),
-            _ => {
-                println!("Invalid mode");
-                continue;
-            }
-        }
-        break;
+    let args: Vec<String> = env::args().collect();
+
+    let cfg = Config::new(&args).unwrap_or_else(|err| {
+        eprintln!("Problem parsing arguments: {err}");
+        process::exit(1);
+    });
+
+    if let Err(e) = run(&cfg) {
+        eprintln!("Application error: {e}");
+        process::exit(1);
     }
 }
